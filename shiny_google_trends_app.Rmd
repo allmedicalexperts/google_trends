@@ -1,0 +1,45 @@
+---
+title: "shiny_google_trends_app"
+output:
+  flexdashboard::flex_dashboard:
+    orientatiom: columns
+  runtime: shiny
+---
+
+```{r global, include = FALSE}
+
+# shiny
+library(shiny)
+library(flexdashboard)
+library(shinycssloaders)
+
+# Google Trends API
+library(gtrendsR)
+
+# Gmail API
+library(gmailr)
+
+# Core ----
+library(tidyverse)
+library(lubridate)
+library(tidyquant)
+library(plotly)
+
+# File System
+library(fs)
+
+# Setup defauld
+your_gmail_address            <- "dr.rodolfomelare@gmail.com"
+path_to_gmail_app_credentials  <- "reports/credentials.json"
+dafault_searchy_terms         <- c('COVID-19','Infecção','Pandemia','Vacina','Sintomas')
+
+gm_auth_configure(poath = path_to_gmail_app_credentials)
+gm_auth(email = your_gmail_address) # refresh auth
+
+```
+
+
+
+
+
+
