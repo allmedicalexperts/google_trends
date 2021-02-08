@@ -1,0 +1,184 @@
+---
+title: "Google Trends Report"
+author: "Rodolfo Terra"
+date: "`r lubridate::now()`"
+output: 
+  html_document:
+    theme: flatly
+  pdf_document: default
+params:
+  search_terms: !r c("AWS", "Azure"," Google Cloud")
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+
+# Google Trends API
+library(gtrendsR)
+
+# Core ----
+library(tidyverse)
+library(lubridate)
+library(tidyquant)
+library(plyr)
+library(geobr)
+library(ggplot2)
+library(utf8)
+
+# File System
+library(fs)
+
+```
+
+# Report Search Terms
+
+```{r} 
+
+tibble("Search Terms" = params$search_terms %>% knitr::kable())
+
+```
+
+```{r} 
+
+gtrends_lst <- gtrendsR::gtrends(params$search_terms,geo = 'BR', time ='all')
+
+```
+
+# Trends Over Time
+
+```{r} 
+gtrends_lst %>%
+  pluck("interest_over_time") %>%
+  mutate(hits = as.numeric(hits)) %>%
+  as_tibble() %>%
+  ggplot(aes(date, hits, color =  keyword)) +
+  geom_line() +
+  geom_smooth(sapn = 0.3, se = TRUE) +
+  theme_tq() +
+  scale_color_tq() +
+  labs(title = "Keyword Trends - BR - Over Time")
+
+```
+
+# Trends By Geography
+
+
+```{r, fig.height = 3} 
+
+states_tbl <- read_state(code_state = 'all')
+
+# 4.0 Data Clean
+
+region_gtrens <- gtrends_lst$interest_by_region
+
+region_gtrens$location <- mapvalues(region_gtrens$location,
+                                    from = levels(as.factor(region_gtrens$location)),
+                                    to = c("Distrito Federal",
+                                           "Acre",     
+                                           "Alagoas",        
+                                           "Amapá",              
+                                           "Amazonas", 
+                                           "Bahia",      
+                                           "Ceará",              
+                                           "Espirito Santo",
+                                           "Goiás",              
+                                           "Maranhão",      
+                                           "Mato Grosso",    
+                                           "Mato Grosso Do Sul", 
+                                           "Minas Gerais",   
+                                           "Pará",            
+                                           "Paraíba",            
+                                           "Paraná",         
+                                           "Pernambuco",      
+                                           "Piauí",              
+                                           "Rio De Janeiro",  
+                                           "Rio Grande Do Norte",
+                                           "Rio Grande Do Sul",  
+                                           "Rondônia",         
+                                           "Roraima",         
+                                           "Santa Catarina",     
+                                           "São Paulo",       
+                                           "Sergipe",         
+                                           "Tocantins"))
+
+
+
+state_trends_tbl <- region_gtrens %>%
+  right_join(states_tbl, by = c('location' = "name_state")) %>%
+  as_tibble()
+
+ggplot(state_trends_tbl, aes(geometry = geom)) + 
+  geom_sf(aes(fill = hits)) +
+  scale_fill_viridis_c() +
+  theme_tq() +
+  facet_wrap(~keyword,  nrow = 1) +
+  labs(title = "Tendências das Palavras Chaves - Brasil")
+
+```
+
+# Top Related Searches
+
+
+```{r, fig.height= 12} 
+
+n_terms <- 20
+
+top_n_related_searches_tbl <- gtrends_lst %>%
+  pluck("related_queries") %>%
+  as_tibble() %>%
+  filter(related_queries == "top") %>%
+  mutate(interest = as.numeric(subject)) %>%
+  
+  select(keyword, value, interest) %>%
+  group_by(keyword) %>%
+  arrange(desc(interest)) %>%
+  slice(1:n_terms) %>%
+  ungroup() %>%
+  
+  mutate(value = as_factor(value) %>% fct_reorder(interest))
+
+x <- top_n_related_searches_tbl$value
+x <- as.character(x)
+Encoding(x) <- c("UTF-8", "UTF-8", "bytes")
+
+x <- as_utf8(x)
+
+x <- as.data.frame(x)
+
+colnames(x) <- c('value')
+
+top_n_related_searches_tbl$value<- x$value
+
+
+
+
+top_n_related_searches_tbl %>%
+  ggplot(aes(value, interest, color = keyword)) +
+  geom_segment(aes(xend = value, yend = 0)) +
+  geom_point() +
+  coord_flip() +
+  facet_wrap(~ keyword, nrow = length(search_terms), scales = "free_y") +
+  theme_tq() +
+  scale_color_tq() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
