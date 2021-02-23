@@ -2,13 +2,13 @@
 
 
 
-![Shiny](E:\AllMedicalExperts\AllMedicalExperts\shiny\Google_trend\app\shiny_0.png)
+![Shiny](shiny_0.png)
 
 # Página Inicial
 
 
 
-![1- tendência](E:\AllMedicalExperts\AllMedicalExperts\shiny\Google_trend\app\1- tendência.jpg)
+![1- tendência](https://github.com/allmedicalexperts/google_trends/blob/main/app/1-%20tend%C3%AAncia.jpg)
 
 
 
@@ -28,7 +28,7 @@ Após clicar no botão **Atualizar**. O gráfico aparece conforme as palavras ch
 
 
 
-![Regionalidade](E:\AllMedicalExperts\AllMedicalExperts\shiny\Google_trend\app\2 - Regionalidade.jpg)
+![Regionalidade](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/2%20-%20Regionalidade.jpg?token=ANHRRIHBWSKNB2IKQ5AZXK3AGUN66)
 
 
 
@@ -44,7 +44,7 @@ O gráfico abaixo lhe dá opção de 05 até 30 temas relacionados, por assunto,
 
 
 
-![Termos Relacionados](E:\AllMedicalExperts\AllMedicalExperts\shiny\Google_trend\app\3 - Termos Relacionados.jpg)
+![Termos Relacionados](https://github.com/allmedicalexperts/google_trends/blob/main/app/3%20-%20Termos%20Relacionados.jpg)
 
 
 
