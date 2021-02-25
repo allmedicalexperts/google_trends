@@ -188,7 +188,8 @@ server <- function(input, output, session){
       
       output$graph_related_topics <- renderPlot({
          
-         n_terms <- input$num
+#         n_terms <- input$num
+         n_terms <- 10      
          
          top_n_related_searches_tbl <- gtrends_lst %>%
             pluck("related_queries") %>%
