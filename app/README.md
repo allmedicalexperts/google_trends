@@ -6,45 +6,33 @@
 
 # Página Inicial
 
-
-
-![1- tendência](https://github.com/allmedicalexperts/google_trends/blob/main/app/1-%20tend%C3%AAncia.jpg)
-
-
-
 Nessa página é possível colocar, de 1 até 05 palavras separadas por **vírgula (,)**.
+
+
+![Temos relacionados](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/1-%20Termos%20Relacionados.jpg)
+
 
 - Cada palavra é tokenrizado com o separador **vírgula (,)**.
 - E Também é possível determinar o período de tempo que queira realizar a pesquisa, desde 2004- até a data presente, até 01 hora atrás.
-- Podemos optar a curva de suavidade no gráfico de série temporais, ou não. 
+
+Após clicar no botão **Atualizar**. O gráfico aparece conforme as palavras chaves escritas, demonstraando em relação a cada palavra escrita, os 10 temas mais buscados no google, durante o período de tempo colocado. 
+
+
+## Tendência
+
+
+Nesta parte da aplicação, será demonstrato um gráfico de série temporal em relação de têndencia em relação a cada palavra chave colocada. 
+
+
+![Tendência](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/2-%20tend%C3%AAncia.jpg)
+
+Podemos optar a curva de suavidade no gráfico de série temporais, caso existir o interesse no **Suavidade**.
+
+![Tendêcia](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/3-%20tend%C3%AAncia.jpg)
 
 
 
-Após clicar no botão **Atualizar**. O gráfico aparece conforme as palavras chaves escritas, o período de tempo e a suavidade ou não no gráfico.
 
-
-
-## Regionalidade
-
-
-
-![Regionalidade](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/2%20-%20Regionalidade.jpg?token=ANHRRIHBWSKNB2IKQ5AZXK3AGUN66)
-
-
-
-Aqui é demonstrado por uma mapa de calor os estados brasileiros, o volume de busca em relação ao assunto.
-
-
-
-## Temas Relacionados
-
-
-
-O gráfico abaixo lhe dá opção de 05 até 30 temas relacionados, por assunto, podendo escolher somente uma quantidade múltiplo de 05.
-
-
-
-![Termos Relacionados](https://github.com/allmedicalexperts/google_trends/blob/main/app/3%20-%20Termos%20Relacionados.jpg)
 
 
 
