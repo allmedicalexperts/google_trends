@@ -31,7 +31,9 @@ Podemos optar a curva de suavidade no gráfico de série temporais, caso existir
 ![Tendêcia](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/3-%20tend%C3%AAncia.jpg)
 
 
+# Site Desenvolvido:
 
+	https://rodolfoterra.shinyapps.io/allmedicalexperts/
 
 
 
