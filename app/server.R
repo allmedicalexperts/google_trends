@@ -12,7 +12,7 @@ library(reshape2)
 library(ggplot2)
 library(plotly)
 library(geobr)
-library(ggspatial)
+#3library(ggspatial)
 library(tidyverse)
 library(lubridate)
 library(tidyquant)
@@ -76,7 +76,7 @@ server <- function(input, output, session){
                labs(title = paste0("Tendência - BR - ","Na Última hora"))
                ))))))))
          
-            ifelse(isTRUE(input$corr),
+            ifelse(isTRUE(input$Smooth),
             gtrends_lst <- gtrends_lst +
             geom_smooth(span = 0.3, se = TRUE),
             gtrends_lst)
@@ -93,103 +93,12 @@ server <- function(input, output, session){
       
       
       
-      # <-- Gráfico de Regionalidade -->
-      
-      output$graph_region <- renderPlot({
-      
-      region_gtrens <- gtrends_lst$interest_by_region
-      
-      region_gtrens$location <- mapvalues(region_gtrens$location,
-                                          from = levels(as.factor(region_gtrens$location)),
-                                          to = c("Distrito Federal",
-                                                 "Acre",     
-                                                 "Alagoas",        
-                                                 "Amapá",              
-                                                 "Amazonas", 
-                                                 "Bahia",      
-                                                 "Ceará",              
-                                                 "Espirito Santo",
-                                                 "Goiás",              
-                                                 "Maranhão",      
-                                                 "Mato Grosso",    
-                                                 "Mato Grosso Do Sul", 
-                                                 "Minas Gerais",   
-                                                 "Pará",            
-                                                 "Paraíba",            
-                                                 "Paraná",         
-                                                 "Pernambuco",      
-                                                 "Piauí",              
-                                                 "Rio De Janeiro",  
-                                                 "Rio Grande Do Norte",
-                                                 "Rio Grande Do Sul",  
-                                                 "Rondônia",         
-                                                 "Roraima",         
-                                                 "Santa Catarina",     
-                                                 "São Paulo",       
-                                                 "Sergipe",         
-                                                 "Tocantins"))
-      
-      
-      
-      state_trends_tbl <- region_gtrens %>%
-         right_join(states_tbl, by = c('location' = "name_state")) %>%
-         as_tibble()
-      
-      
-      
-      
-      # Make Map Geografic
-      
-      tema_mapa <-
-         theme_bw() + # Escolhe o tema. Eu gosto do theme_bw() por ser bem simples/limpo
-         
-         # Os códigos abaixo são referentes à estética do tema,
-         # como o tamanho da fonte, direção do texto,
-         # linhas ao fundo, etc.
-         
-         theme(
-            axis.text.y = element_text(
-               angle = 90,
-               hjust = 0.5,
-               size = 8
-            ),
-            axis.text.x = element_text(size = 8),
-            axis.title.y = element_text(size = rel(0.8)),
-            axis.title.x = element_text(size = rel(0.8)),
-            panel.grid.major = element_line(
-               color = gray(0.9),
-               linetype = "dashed",
-               size = 0.1
-            ),
-            panel.background = element_rect(fill = "white") +
-               annotation_scale(location = "br", width_hint = 0.30)
-         )
-      
-      
-      ggplot(state_trends_tbl, aes(geometry = geom)) + 
-         geom_sf(aes(fill = hits)) +
-         scale_fill_viridis_c() +
-         theme_tq() +
-         facet_wrap(~keyword,  nrow = 1) +
-         labs(title = "Tendências dos temas - Brasil") +
-         labs(fill = "Frequência:") 
-      
-      
-      })
-      
-         
-      # <---->
-      
-      
-      
-      
-      
+     
       # <-- Gráfico de Palavras relacionadas pelo tema -->
       
       output$graph_related_topics <- renderPlot({
          
-#         n_terms <- input$num
-         n_terms <- 10      
+         n_terms <- 10
          
          top_n_related_searches_tbl <- gtrends_lst %>%
             pluck("related_queries") %>%

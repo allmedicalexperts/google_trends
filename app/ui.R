@@ -50,7 +50,7 @@ ui <- dashboardPage(
                             "Na Última hora" = "now 1-H"),
                 selected = "2004 - Presente"),
     
-    checkboxInput("corr", 
+    checkboxInput("Smooth", 
                   label = strong("Suavidade",style="text-align:center;color:#FFA319;font-size:150%")),
     br(),
     
@@ -78,26 +78,34 @@ ui <- dashboardPage(
       h5(em(strong("Análise de Tendência", style="color:darkblue;font-size:210%")),align = "center"),
       
       h5(tabsetPanel(type = "tabs",
-                  tabPanel("Tendência",
+                     
+                     
+                     
+                  tabPanel("Temas Relacionados",
+                           HTML("<br><br>"),
+                           h5("Os 10 Temas relacionados para cada palavra chave."),
+                           plotOutput("graph_related_topics")
+                  ),
+                  
+                  
+                  
+                  
+                  
+#                  tabPanel("Regionalidade",
+#                           HTML("<br><br>"),
+#                           h5("Gráfico por tema, e frequência por estados brasileiro."),
+#                           plotOutput("graph_region")
+#                           ),
+                  tabPanel("Tendências",
                            HTML("<br><br>"),
                            h5("Gráfico de Tendência das palavras."),
-                           plotOutput("graph_TS")
-                  ),
-                  tabPanel("Regionalidade",
-                           HTML("<br><br>"),
-                           h5("Gráfico por tema, e frequência por estados brasileiro."),
-                           plotOutput("graph_region")
-                           ),
-                  tabPanel("Temas Relacionados.",
-                           HTML("<br><br>"),
-                           h5("Os 10 principais Temas relacionados com a palavra pesquisada"),
 #                           numericInput("num", 
 #                                        h5("De 5 a 30 termos"),
 #                                        min = 5,
 #                                        max = 30,
 #                                        step = 5,
 #                                        value = 10),
-                           plotOutput("graph_related_topics")
+                           plotOutput("graph_TS")
                   )),
                   style="padding-left: 20px;"
                   )
