@@ -4,6 +4,13 @@
 
 ![Shiny](shiny_0.png)
 
+
+# Page de Login e Senha
+
+Primeiramente para acessar o APP, é preciso colocar Login e senha. Como teste apenas os dois usuários estão disponíveis com suas respectivas senhas. Caso o APP passa a ser validade estes ascessos estarão em um banco de dados.
+
+![Login](https://raw.githubusercontent.com/allmedicalexperts/google_trends/main/app/0-%20Login.jpg)
+
 # Página Inicial
 
 Nessa página é possível colocar, de 1 até 05 palavras separadas por **vírgula (,)**.
@@ -33,7 +40,7 @@ Podemos optar a curva de suavidade no gráfico de série temporais, caso existir
 
 # Site Desenvolvido:
 
-	https://rodolfoterra.shinyapps.io/allmedicalexperts/
+	https://rodolfoterra.shinyapps.io/All_Medical_Experts_Trends/
 
 
 
