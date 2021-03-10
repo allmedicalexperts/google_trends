@@ -2,114 +2,79 @@
 
 # 1.1 Object -----
 
-# Application that the public will be able to perform direct search by google trend
+# Application that the public will be able to perform direct search by Google trend
 
 # 2.0 Packages ----
-
+library(shiny)
 library(shinydashboard)
-library(ggplot2)
-library(plotly)
-
+library(DT)
+library(shinyjs)
+library(sodium)
 
 # 3.0 Make UI.R ----
 
-ui <- dashboardPage(
-  dashboardHeader(title="All Medical Expert"),
-  
-  
-  dashboardSidebar(
-    br(),
-    
-    
-    h6(" Termo(s) de Pesquisa",style="text-align:center;color:#FFA319;font-size:150%"),
-    
-    helpText("Forneça uma ou até 05 (cinco) palavras chaves que deseja que mostrando a tendência 
-             e os temas relacionados. Use vírgula para separar os termos.", 
-             style="text-align:justify; padding-left: 10px; padding-right: 10px"),
-    
-    textInput('terms',''),
-    
-    
-    #selectInput("geography", 
-    #            label = tags$h4(strong(em("Localização")),style="text-align:center;color:#FFA319;font-size:150%"),
-    #            choices = c("Brasil" = "BR",
-    #                        "Estados Unidos"= "US"),
-    #            selected = "Brasil"),
-    
-    
-    selectInput("period", 
-                label = tags$h4(strong(em("Período de tempo")),style="text-align:center;color:#FFA319;font-size:150%"),
-                choices = c("2004 - Presente" = "all",
-                            "Nos Últimos 5 anos"= "today+5-y",
-                            "Últimos 12 meses"="today 12-m",
-                            "Últimos 90 dias" = "today 3-m",
-                            "Últimos 30 dias"= "today 1-m",
-                            "Últimos 7 dias"= "now 7-d",
-                            "Ontem" = "now 1-d",
-                            "Nas Últimas 4 horas"="now 4-H",
-                            "Na Última hora" = "now 1-H"),
-                selected = "2004 - Presente"),
-    
-    checkboxInput("Smooth", 
-                  label = strong("Suavidade",style="text-align:center;color:#FFA319;font-size:150%")),
-    br(),
-    
-    tags$h1(actionButton('btn_plot', 'Atualizar'),style="text-align:center"),
-    helpText(style="text-align:justify; padding-left: 10px; padding-right: 10px",
-             "Para obter resultado, clique no botão Atualizar.
-             "),
-    
-    br(),
-    br(),
-    br(),
-    br(),
-    br(),
-    br()
-    
-  ),
-  
-  
-  #####
-  ##  Main Panel
-  #### help ====        
-  dashboardBody(    
-        fluidRow(
-      br(),
-      h5(em(strong("Análise de Tendência", style="color:darkblue;font-size:210%")),align = "center"),
-      
-      h5(tabsetPanel(type = "tabs",
-                     
-                     
-                     
-                  tabPanel("Temas Relacionados",
-                           HTML("<br><br>"),
-                           h5("Os 10 Temas relacionados para cada palavra chave."),
-                           plotOutput("graph_related_topics")
-                  ),
-                  
-                  
-                  
-                  
-                  
-#                  tabPanel("Regionalidade",
-#                           HTML("<br><br>"),
-#                           h5("Gráfico por tema, e frequência por estados brasileiro."),
-#                           plotOutput("graph_region")
-#                           ),
-                  tabPanel("Tendências",
-                           HTML("<br><br>"),
-                           h5("Gráfico de Tendência das palavras."),
-#                           numericInput("num", 
-#                                        h5("De 5 a 30 termos"),
-#                                        min = 5,
-#                                        max = 30,
-#                                        step = 5,
-#                                        value = 10),
-                           plotOutput("graph_TS")
-                  )),
-                  style="padding-left: 20px;"
-                  )
-      
-      
-    )
-  ))
+
+# 3.1 Main login screen ----
+loginpage <- div(id = "loginpage", style = "width: 500px; max-width: 100%; margin: 0 auto; padding: 20px;",
+                 wellPanel(
+                   tags$h2("LOG IN", class = "text-center", style = "padding-top: 0;color:#333; font-weight:600;"),
+                   textInput("userName", placeholder="Username", label = tagList(icon("user"), "Username")),
+                   passwordInput("passwd", placeholder="Password", label = tagList(icon("unlock-alt"), "Password")),
+                   br(),
+                   div(
+                     style = "text-align: center;",
+                     actionButton("login", "SIGN IN", style = "color: white; background-color:#3c8dbc;
+                                 padding: 10px 15px; width: 150px; cursor: pointer;
+                                 font-size: 18px; font-weight: 600;"),
+                     shinyjs::hidden(
+                       div(id = "nomatch",
+                           tags$p("Oops! Incorrect username or password!",
+                                  style = "color: red; font-weight: 600; 
+                                            padding-top: 5px;font-size:16px;", 
+                                  class = "text-center"))),
+                     br(),
+                     br(),
+                     tags$code("Username: myuser  Password: mypass"),
+                     br(),
+                     tags$code("Username: myuser1  Password: mypass1")
+                   ))
+)
+
+
+# <-- Credentials -->
+credentials = data.frame(
+  username_id = c("myuser", "myuser1"),
+  passod   = sapply(c("mypass", "mypass1"),password_store),
+  permission  = c("basic", "advanced"), 
+  stringsAsFactors = F
+)
+
+# <-- End Credential -->
+
+
+
+# 3.2 DashboardPage ----
+
+
+# <-- 3.2.1 Header -->
+
+header <- dashboardHeader( title = "All Medical Expert", uiOutput("logoutbtn"))
+
+
+# <-- 3.2.2 sidebar -->
+
+sidebar <- dashboardSidebar(uiOutput("sidebarpanel")) 
+
+
+# <-- 3.2.3 Body -->
+
+body <- dashboardBody(shinyjs::useShinyjs(), uiOutput("body"))
+
+
+# <-- 3.2.4 Run DashboardPega -->
+
+ui<-dashboardPage(header, sidebar, body, skin = "blue")
+
+
+
+
